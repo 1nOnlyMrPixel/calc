@@ -16,8 +16,12 @@ body
 {
     display: flex;
     flex-direction: column;
+    padding: 40px;
     height: 500px;
     width: 400px;
+    box-shadow: 0px 7px 10px rgb(195, 202, 207);
+    border-radius: 14px;
+    /* box-sizing: border-box; */
     /* border: 2px solid red; */
 }
 .displayPanel
@@ -26,11 +30,13 @@ body
     display: flex;
     justify-content: right;
     align-items: flex-end;
-    border: 1px solid gray;
+    border: 2px solid royalblue;
     /* border: 2px solid red; */
 }
 .btnBox
 {
+    margin-top: 20px;
+    gap: 4px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -40,9 +46,21 @@ body
 {
     display: flex;
     flex: 1;
+    gap: 4px;
     /* border: 2px solid crimson; */
 }
 .btns
 {
     flex: 1;
+    border-radius: 20px;
+    font-size: 20px;
+    font-family: monospace;
+    font-weight: 600;
+    border: 1px solid  royalblue;
+    background-color: rgb(255, 255, 255);
+}
+
+.btns:hover
+{
+    background-color: rgb(231, 237, 255);
 }
