@@ -55,16 +55,19 @@ function Calculate(e)
             }
            else
             {
-                prevVal=operate(prevVal,inputNum,prevOperator);
+                prevVal=+operate(prevVal,inputNum,prevOperator);
                 displayPanel.textContent=prevVal;
             }
            if(currentOperator==="=")
-            clearOldValue();
+                clearOldValue();
            else
             prevOperator=currentOperator;
     }
-    else
-        clearDisplayPanel();
+    else if(e.target.id==="btnClear")
+        {
+            clearDisplayPanel();
+            clearOldValue();
+        }
 }
 
 
