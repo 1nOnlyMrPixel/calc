@@ -1,12 +1,13 @@
 let prevVal=null;
 let DataOnDisp="";
+let DataOnMemoryPanel="";
 let prevOperator=null;
 let inputNum="";
 let currentOperator="";
 
 const btnBox=document.querySelector(".btnBox");
 const displayPanel=document.querySelector(".displayPanel");
-
+const memoryPanel=document.querySelector(".displayMemory");
 
 function checkBtnIsNum(e)
 {
@@ -30,6 +31,11 @@ function clearDisplayPanel()
     displayPanel.textContent="";
     DataOnDisp="";
 }
+function clearMemoryPanel()
+{
+     memoryPanel.textContent="";
+    DataOnMemoryPanel="";
+}
 function clearOldValue()
 {
     prevVal=null;
@@ -44,11 +50,13 @@ function Calculate(e)
     }
     else if(checkBtnIsOperator(e))   //if clicked btn is an operator
     {
-           inputNum=+displayPanel.textContent;
-           clearDisplayPanel();
-           currentOperator=getOperatorType(e);
-           if(prevOperator===null)
-                prevOperator=currentOperator;
+        inputNum=+displayPanel.textContent;
+        currentOperator=getOperatorType(e);
+        if(prevOperator===null)
+            prevOperator=currentOperator;
+        DataOnMemoryPanel+=DataOnDisp+currentOperator;
+        memoryPanel.textContent=DataOnMemoryPanel;
+        clearDisplayPanel();
            if(prevVal===null)
             {
                 prevVal=inputNum;
@@ -59,13 +67,17 @@ function Calculate(e)
                 displayPanel.textContent=prevVal;
             }
            if(currentOperator==="=")
+           {    
+               DataOnMemoryPanel=prevVal;
                 clearOldValue();
+           }
            else
             prevOperator=currentOperator;
     }
     else if(e.target.id==="btnClear")
         {
             clearDisplayPanel();
+            clearMemoryPanel();
             clearOldValue();
         }
 }
