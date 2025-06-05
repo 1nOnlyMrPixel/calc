@@ -45,6 +45,8 @@ function Calculate(e)
 {
     if(checkBtnIsNum(e))  //if clicked btn is a numeric btn
     {
+        if(prevOperator==="=")
+            clearMemoryPanel();
         DataOnDisp+=getBtnValue(e);
         displayPanel.textContent=DataOnDisp;
     }
@@ -57,6 +59,8 @@ function Calculate(e)
         DataOnMemoryPanel+=DataOnDisp+currentOperator;
         memoryPanel.textContent=DataOnMemoryPanel;
         clearDisplayPanel();
+        // console.log(`Previous Operator=${prevOperator}`);
+        // console.log(`Current Operator=${currentOperator}`);
            if(prevVal===null)
             {
                 prevVal=inputNum;
@@ -68,11 +72,10 @@ function Calculate(e)
             }
            if(currentOperator==="=")
            {    
-               DataOnMemoryPanel=prevVal;
+                DataOnMemoryPanel=prevVal;
                 clearOldValue();
            }
-           else
-            prevOperator=currentOperator;
+           prevOperator=currentOperator;
     }
     else if(e.target.id==="btnClear")
         {
