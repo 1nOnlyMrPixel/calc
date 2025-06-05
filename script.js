@@ -68,6 +68,8 @@ function Calculate(e)
            else
             {
                 prevVal=+operate(prevVal,inputNum,prevOperator);
+                if(prevVal%1!==0)
+                    prevVal=prevVal.toFixed(2);
                 displayPanel.textContent=prevVal;
             }
            if(currentOperator==="=")
