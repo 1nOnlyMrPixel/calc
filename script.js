@@ -92,9 +92,6 @@ function checkOverFlow()
 function Calculate(e) 
 {
   checkOverFlow();
-
-  // if(MemOverflow!==true)  // && DispOverflow!==true
-    // { 
     if (checkBtnIsNum(e))           //if clicked btn is a numeric btn or not
        {
         if (prevBtnIsEquals) 
@@ -102,20 +99,6 @@ function Calculate(e)
           clearMemoryPanel();
           prevBtnIsEquals = false;
           }
-        // if(DispOverflow!==true)
-        //   {
-        //   if(lastBtnIsOp && op !== null && val1 != null)
-        //     DataOnMemoryPanel += op;
-        //   DataOnDisp += getBtnValue(e);
-        //   displayPanel.textContent = DataOnDisp;
-        //   }
-        //   else if(MemOverflow===true && DispOverflow==true)
-        //   {
-        //   DataOnDisp= getBtnValue(e);
-        //   displayPanel.textContent = DataOnDisp;
-        //   }
-        
-
         if(lastBtnIsOp && op !== null && val1 != null)
           DataOnMemoryPanel += op;
           if(DispOverflow!==true)
@@ -160,7 +143,7 @@ function Calculate(e)
       if (val1 != null && getValueFromDU() != "") 
         val2 = +getValueFromDU();
       if(val1!=null && getValueFromDU()==="")
-      {
+      {                                                         //sets results to val1 when val1 is available and equals btn is hit
         result=val1;
         clearDisplayPanel();
         resetValue();
