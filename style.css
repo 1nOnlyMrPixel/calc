@@ -99,3 +99,8 @@ body
 {
     background-color: rgb(231, 237, 255);
 }
+.clicked
+{
+    background-color: rgb(190, 194, 240);
+    border: 1px solid rgb(119, 55, 238);
+}

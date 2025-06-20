@@ -11,6 +11,7 @@ let result;
 let DispOverflow=false;
 let MemOverflow=false;
 
+let prevOPBtn=null;
 const btnBox = document.querySelector(".btnBox");
 const displayPanel = document.querySelector(".displayPanel");
 const memoryPanel = document.querySelector(".displayMemory");
@@ -19,6 +20,20 @@ function checkBtnIsNum(e) {
   return e.target.id.slice(0, 3) === "Num";
 }
 function checkBtnIsOperator(e) {
+  if(e.target.id.slice(0, 2) === "OP" && (memoryPanel.textContent!=="" || displayPanel.textContent!==""))
+    {
+      if(prevOPBtn!==null)
+        {
+          prevOPBtn.classList.toggle("clicked");
+          e.target.classList.toggle("clicked");
+          prevOPBtn=e.target;
+        }
+        else
+        {
+          prevOPBtn=e.target;
+          prevOPBtn.classList.toggle("clicked");
+        }
+    }
   return e.target.id.slice(0, 2) === "OP";
 }
 function getBtnValue(e) {
@@ -44,6 +59,9 @@ function resetValue() {
   op = null;
   MemOverflow=false;
   DispOverflow=false;
+  if(prevOPBtn!==null && prevOPBtn.classList.contains("clicked"))
+    prevOPBtn.classList.remove("clicked");
+  prevOPBtn=null;
 }
 function getValueFromDU() {
   return displayPanel.textContent;
@@ -69,7 +87,6 @@ function checkOverFlow()
     MemOverflow=true;
     memoryPanel.textContent="Memory Overflow";
   }
-  // console.log(`Memory Overflow:${MemOverflow}\nDisplay Overflow:${DispOverflow}`);
 }
 
 function Calculate(e) 
@@ -138,10 +155,18 @@ function Calculate(e)
       }
     if (e.target.id === "btnEqual") 
       {
+      lastBtnIsOp=false;
       prevBtnIsEquals = true;
       if (val1 != null && getValueFromDU() != "") 
         val2 = +getValueFromDU();
-      if (val1 != null && val2 != null && op != null)      //calculate only when val1,val2 & operator is available
+      if(val1!=null && getValueFromDU()==="")
+      {
+        result=val1;
+        clearDisplayPanel();
+        resetValue();
+        displayPanel.textContent=result;
+      }
+      else if (val1 != null && val2 != null && op != null)      //calculate only when val1,val2 & operator is available
         {
         DataOnMemoryPanel += getValueFromDU();
         clearDisplayPanel();
