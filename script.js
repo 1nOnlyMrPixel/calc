@@ -2,6 +2,7 @@ let DataOnDisp = "";
 let DataOnMemoryPanel = "";
 let prevBtnIsEquals = false;
 let lastBtnIsOp = false;
+let prevBtnIsDot=false;
 let maxMemoryCharacter=41;
 let maxDisplayPanelCharacters=22;
 let val1 = null,
@@ -10,17 +11,16 @@ let val1 = null,
 let result;
 let DispOverflow=false;
 let MemOverflow=false;
-
 let prevOPBtn=null;
 const btnBox = document.querySelector(".btnBox");
 const displayPanel = document.querySelector(".displayPanel");
 const memoryPanel = document.querySelector(".displayMemory");
-
+let LastLastEqualForDot=false;
 function checkBtnIsNum(e) {
   return e.target.id.slice(0, 3) === "Num";
 }
 function checkBtnIsOperator(e) {
-  if(e.target.id.slice(0, 2) === "OP" && (memoryPanel.textContent!=="" || displayPanel.textContent!==""))
+  if(e.target.id.slice(0, 2) === "OP" && (memoryPanel.textContent!=="" || displayPanel.textContent!=="") && getValueFromDU().slice(-1)!==".")
     {
       if(prevOPBtn!==null)
         {
@@ -35,6 +35,10 @@ function checkBtnIsOperator(e) {
         }
     }
   return e.target.id.slice(0, 2) === "OP";
+}
+function checkDisplayPanelIsEmpty()
+{
+  return getValueFromDU()==="";
 }
 function getBtnValue(e) {
   return e.target.textContent;
@@ -59,6 +63,7 @@ function resetValue() {
   op = null;
   MemOverflow=false;
   DispOverflow=false;
+  prevBtnIsDot=false;
   if(prevOPBtn!==null && prevOPBtn.classList.contains("clicked"))
     prevOPBtn.classList.remove("clicked");
   prevOPBtn=null;
@@ -92,10 +97,19 @@ function checkOverFlow()
 function Calculate(e) 
 {
   checkOverFlow();
+     if(e.target.id==="btnBackSpace" && checkDisplayPanelIsEmpty()===false)    //for backspace btn
+        {
+            if(DataOnDisp.slice(-1)==".")
+              prevBtnIsDot=false;
+             DataOnDisp=DataOnDisp.slice(0,DataOnDisp.length-1) ;
+             displayPanel.textContent=DataOnDisp;
+        }
     if (checkBtnIsNum(e))           //if clicked btn is a numeric btn or not
        {
+        LastEqualForDot=false;
         if (prevBtnIsEquals) 
           {
+            LastEqualForDot=true;
           clearMemoryPanel();
           prevBtnIsEquals = false;
           }
@@ -103,15 +117,24 @@ function Calculate(e)
           DataOnMemoryPanel += op;
           if(DispOverflow!==true)
           {
-          DataOnDisp += getBtnValue(e);
+            if(getBtnValue(e)==="." && prevBtnIsDot===false && checkDisplayPanelIsEmpty()===false && lastBtnIsOp===false && LastEqualForDot===false) 
+            {
+              prevBtnIsDot=true;
+              DataOnDisp+=getBtnValue(e);  
+            }
+            if(getBtnValue(e)!==".") 
+            {
+              DataOnDisp += getBtnValue(e);
+            }
           }
           else
             DataOnDisp=getBtnValue(e);
         displayPanel.textContent = DataOnDisp;
         lastBtnIsOp = false;
         }
-    if (checkBtnIsOperator(e))      //checking the input btn is operator or not
+    if (checkBtnIsOperator(e) && getValueFromDU().slice(-1)!=="." )      //checking the input btn is operator or not and not a dot operator
       {
+        prevBtnIsDot=false;
         //for clearing the memory panel on equals btn press before printing the result
         if(prevBtnIsEquals)
           {
@@ -182,6 +205,10 @@ function mult(a, b) {
 function div(a, b) {
   return (a / b).toFixed(2);
 }
+function mod(a,b)
+{
+  return(a%b);
+}
 function operate(a, b, operator) {
   switch (operator) {
     case "+":
@@ -195,6 +222,8 @@ function operate(a, b, operator) {
           break;
           case "/":
             return div(a, b);
+          case "%":
+            return mod(a,b);
       break;
     }
   }
