@@ -12,11 +12,16 @@ let result;
 let DispOverflow=false;
 let MemOverflow=false;
 let prevOPBtn=null;
+let LastLastEqualForDot=false;
+
+const shortcutsMap=document.querySelector(".shortcutMap");
+const shortcutMapBtn=document.querySelector("#shortcutsBtn");
+const shortcutMapCloseBtn=document.querySelector("#shortcutMapCloseBtn");
 const btnBox = document.querySelector(".btnBox");
 const displayPanel = document.querySelector(".displayPanel");
 const memoryPanel = document.querySelector(".displayMemory");
 const calcContainer=document.querySelector(".CalculatorContainer");
-let LastLastEqualForDot=false;
+
 function checkBtnIsNum(e) {
   return e.target.id.slice(0, 3) === "Num";
 }
@@ -97,7 +102,6 @@ function checkOverFlow()
 
 function Calculate(e) 
 {
-  console.log(e);
   checkOverFlow();
      if(e.target.id==="btnBackSpace" && checkDisplayPanelIsEmpty()===false)    //for backspace btn
         {
@@ -231,6 +235,18 @@ function operate(a, b, operator) {
   }
 
 btnBox.addEventListener("click", Calculate);
+shortcutMapBtn.addEventListener("click",()=>
+{
+  calcContainer.style.display="none";
+  shortcutsMap.style.display="flex";
+  document.removeEventListener("keydown",handleKeyDown);
+});
+shortcutMapCloseBtn.addEventListener("click",()=>
+{
+  calcContainer.style.display="flex";
+  shortcutsMap.style.display="none";
+  document.addEventListener("keydown",handleKeyDown);
+});
 
 let clickEvent = new MouseEvent('click',{                //Bubbling must be true in order the capture the event at the parent i.e BtnBox
     "view": window, 

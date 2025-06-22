@@ -9,8 +9,36 @@
 <body>
 
 <div class="nav">Simple Calculator</div>
-<div class="CalculatorContainer">
 
+
+<!-- Shortcuts  Map -->
+ 
+<div class="shortcutMap">
+    <h1>Key Shortcuts <img id="shortcutMapCloseBtn" src="./resources/closeIcon.png" alt=""></h1>
+    <div class="shortcutBtnsSection">
+    <p>
+     <section>
+         <img src="./resources/backspace.png" alt="Backspace Key">   :  Delete
+    </section> 
+     <section>
+         <img src="./resources/esc.png" alt="Escape Key">         :  Clear All
+    </section> 
+     <section>
+         <img src="./resources/enter.png" alt="">:  Equals/Result
+    </section> 
+     <section>
+         <img src="./resources/zero.png" alt="">- <img src="./resources/nine.png" alt="">   :  Value 0-9
+    </section> 
+     <section>
+        <img src="./resources/plus.png" alt=""> ,<img src="./resources/minus.png" alt="">,<img src="./resources/asterisk.png" alt="">,<img src="./resources/divide.png" alt="">,<img src="/resources/dot.png" alt="">,<img src="./resources/percentage.png" alt="">:  Respective Operators
+    </section> 
+</div>
+</div>
+
+
+<!-- Calculator Box -->
+
+<div class="CalculatorContainer">
 <!-- for display unit -->
  <div class="displayArea">
         <div class="displayMemory"></div>
@@ -59,6 +87,7 @@
 </div>
 
 </div>
+<button id="shortcutsBtn" class="shortcut">View Shortcuts</button>
 </div>
 
 
